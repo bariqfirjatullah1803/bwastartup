@@ -2,9 +2,11 @@ package main
 
 import (
 	"bwastartup/auth"
+	"bwastartup/campaign"
 	"bwastartup/handler"
 	"bwastartup/helper"
 	"bwastartup/user"
+	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/mysql"
@@ -23,6 +25,16 @@ func main() {
 	}
 
 	userRepository := user.NewRepository(db)
+	campaignRepository := campaign.NewRepository(db)
+
+	campaigns, err := campaignRepository.FindByUserID(1)
+	for _, c := range campaigns {
+		fmt.Println(c.Name)
+		if len(c.CampaignImages) > 0 {
+			fmt.Println(c.CampaignImages[0].FileName)
+		}
+	}
+
 	userService := user.NewService(userRepository)
 	authService := auth.NewService()
 
