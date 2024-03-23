@@ -22,9 +22,6 @@ func main() {
 	userService := user.NewService(userRepository)
 	authService := auth.NewService()
 
-	//token := authService.GenerateToken(1001)
-	//fmt.Println(token)
-
 	userHandler := handler.NewUserHandler(userService, authService)
 
 	router := gin.Default()
